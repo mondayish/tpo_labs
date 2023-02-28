@@ -69,7 +69,7 @@ public class Action {
                 System.out.println("От " + planet.getRussian() + " улетела комета");
             }
         };
-        SpaceBody many_meteorits = new SpaceBody() {
+        SpaceBody manyMeteors = new SpaceBody() {
             final int size = 100;
             final int number = 2000;
             final Planet planet = Planet.EARTH;
@@ -87,9 +87,9 @@ public class Action {
             }
         };
         cometa.startFly();
-        many_meteorits.startFly();
+        manyMeteors.startFly();
         arrive1.go();
-        many_meteorits.finishFly();
+        manyMeteors.finishFly();
         arrive1.go();
     }
 }

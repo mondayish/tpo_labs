@@ -144,8 +144,8 @@ public class Person extends Alive implements Philosophy {
         setCondition(Condition.THINK);
     }
 
-    // метод для перечисления элементов массива в строке, если массив пуст возвращает параметр if_null
-    public String transfer(Object[] array, String if_null) {
+    // метод для перечисления элементов массива в строке, если массив пуст возвращает параметр ifNull
+    public String transfer(Object[] array, String ifNull) {
         if (array != null && array.length > 0) {
             String result = "";
             for (Object i : array) {
@@ -153,7 +153,7 @@ public class Person extends Alive implements Philosophy {
             }
             result = result.substring(0, result.length() - 2);
             return result;
-        } else return if_null;
+        } else return ifNull;
     }
 
     // персонаж одевается
@@ -241,28 +241,28 @@ public class Person extends Alive implements Philosophy {
 
     // статический вложенный класс для путешествий между планетами
     public static class Arrive {
-        private Animal animal_with_power;    // чтобы животное могло перевозить Person у него должна быть положительная power(power==кол-во пассажиров)
+        private Animal animalWithPower;    // чтобы животное могло перевозить Person у него должна быть положительная power(power==кол-во пассажиров)
         private Person[] passengers;         // не более 3 пассажиров
         private Planet from;
         private Planet to;
 
-        public Arrive(Animal animal_with_power, Planet from, Planet to, Person... passengers) {
+        public Arrive(Animal animalWithPower, Planet from, Planet to, Person... passengers) {
             try {
                 // если планета from совпадает с to или если животное находится вообще на другой планете, то нет смысла в путешествии
-                if (from == to || from != animal_with_power.getPlace()) {
-                    throw new ArriveException(animal_with_power, from, to);
+                if (from == to || from != animalWithPower.getPlace()) {
+                    throw new ArriveException(animalWithPower, from, to);
                 }
                 this.from = from;
                 this.to = to;
-                setAnimal_with_power(animal_with_power);
+                setAnimalWithPower(animalWithPower);
                 setPassengers(passengers);
             } catch (ArriveException e) {
                 System.out.println(e.getMessage());
             }
         }
 
-        public Animal getAnimal_with_power() {
-            return animal_with_power;
+        public Animal getAnimalWithPower() {
+            return animalWithPower;
         }
 
         public Person[] getPassengers() {
@@ -278,7 +278,7 @@ public class Person extends Alive implements Philosophy {
         }
 
         public void go() {
-            if (animal_with_power != null) {
+            if (animalWithPower != null) {
                 //здесь проверяем опасность путешествия и отменяем его в случае высокого коэффициента опасности
                 double coefficient1 = from.getLevelOfDanger();
                 double coefficient2 = to.getLevelOfDanger();
@@ -296,18 +296,18 @@ public class Person extends Alive implements Philosophy {
                 for (Person person : passengers) {
                     strPassengers += person.getName() + ", ";
                 }
-                System.out.println(animal_with_power.getName() + " с пассажирами: " + strPassengers
+                System.out.println(animalWithPower.getName() + " с пассажирами: " + strPassengers
                         + "перемещаются с планеты " + getFrom().getRussian() + " на планету " + getTo().getRussian());
-                animal_with_power.setCondition(Condition.IN_ARRIVE);   //здесь вычитается энергия
-                animal_with_power.setCondition(Condition.NOTHING);
-                animal_with_power.setPlace(to);
+                animalWithPower.setCondition(Condition.IN_ARRIVE);   //здесь вычитается энергия
+                animalWithPower.setCondition(Condition.NOTHING);
+                animalWithPower.setPlace(to);
                 //перемещаем всех пассажиров и устанвливаем состояние ничегонеделания
                 for (Person person : passengers) {
                     person.setPlace(to);
                     person.setCondition(Condition.NOTHING);
                 }
-                System.out.println("Все пассажиры слезли с животного: " + animal_with_power.getName());
-                animal_with_power = null;
+                System.out.println("Все пассажиры слезли с животного: " + animalWithPower.getName());
+                animalWithPower = null;
             } else {
                 System.out.println("Путешествие невозможно!!!");
             }
@@ -324,21 +324,21 @@ public class Person extends Alive implements Philosophy {
         }
 
         // всевозможные проверки на силу и состояние
-        public void setAnimal_with_power(Animal animal_with_power) {
-            if (animal_with_power.getPower() == 0) {
-                System.out.println("Animal " + animal_with_power.getName() + " слишком слабо для перевозки пассажиров, берегите животных!!!");
+        public void setAnimalWithPower(Animal animalWithPower) {
+            if (animalWithPower.getPower() == 0) {
+                System.out.println("Animal " + animalWithPower.getName() + " слишком слабо для перевозки пассажиров, берегите животных!!!");
                 return;
             }
-            if (animal_with_power.getCondition() == Condition.REST || animal_with_power.getCondition() == Condition.SLEEP) {
-                animal_with_power.stand();
+            if (animalWithPower.getCondition() == Condition.REST || animalWithPower.getCondition() == Condition.SLEEP) {
+                animalWithPower.stand();
             }
-            this.animal_with_power = animal_with_power;
+            this.animalWithPower = animalWithPower;
         }
 
         public void setPassengers(Person[] passengers) {
             final int POWER_FOR_ONE_PASSENGER = 2;    //силы на одного пассажира
             final int POWER_FOR_GOTO = 2;             //силы на перемещение между планетами
-            if (animal_with_power != null && passengers != null) {
+            if (animalWithPower != null && passengers != null) {
                 //удаляем пассажиров, которые пытаются залезть дважды и приводим нормально типы
                 Object[] objects = deleteDoubleThings(passengers);
                 Person[] normalPassengers = new Person[objects.length];
@@ -348,22 +348,22 @@ public class Person extends Alive implements Philosophy {
                 normalPassengers = deletePersonFromOtherPlanetsOrOnAnimal(normalPassengers);  // убираем из пассажиров людей с других планет или уже сидящих на животном
                 // делаем так, чтобы животное не убили перегрузкой пассажиров
                 int size;
-                if (normalPassengers.length > animal_with_power.getPower()) {
-                    size = animal_with_power.getPower();
-                    System.out.println("Многовато пассажиров, все не влезут на " + animal_with_power.getName());
+                if (normalPassengers.length > animalWithPower.getPower()) {
+                    size = animalWithPower.getPower();
+                    System.out.println("Многовато пассажиров, все не влезут на " + animalWithPower.getName());
                 } else size = normalPassengers.length;
                 this.passengers = new Person[size];
                 // все пассажиры садятся
                 for (int i = 0; i < size; i++) {
                     this.passengers[i] = normalPassengers[i];
-                    System.out.println(this.passengers[i].getName() + " садиться на " + animal_with_power.getName());
+                    System.out.println(this.passengers[i].getName() + " садиться на " + animalWithPower.getName());
                     this.passengers[i].setCondition(Condition.SIT_ON_ANIMAL);
                 }
                 // делаем проверку на энергию животного
-                if (animal_with_power.getEnergy() < POWER_FOR_GOTO + POWER_FOR_ONE_PASSENGER * this.passengers.length) {
-                    System.out.println("Animal " + animal_with_power.getName() + " недостаточно энергии для такого путешествия, пусть отдыхает...");
+                if (animalWithPower.getEnergy() < POWER_FOR_GOTO + POWER_FOR_ONE_PASSENGER * this.passengers.length) {
+                    System.out.println("Animal " + animalWithPower.getName() + " недостаточно энергии для такого путешествия, пусть отдыхает...");
                     this.passengers = null;
-                    System.out.println("Все пассажиры слезли с животного: " + animal_with_power.getName());
+                    System.out.println("Все пассажиры слезли с животного: " + animalWithPower.getName());
                 }
             }
         }
