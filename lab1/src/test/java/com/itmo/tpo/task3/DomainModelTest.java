@@ -1,5 +1,6 @@
 package com.itmo.tpo.task3;
 
+import com.itmo.tpo.task3.enums.BagType;
 import com.itmo.tpo.task3.enums.Color;
 import com.itmo.tpo.task3.enums.Planet;
 import com.itmo.tpo.task3.models.impl.Animal;
@@ -32,6 +33,14 @@ public class DomainModelTest {
     void testArriveException(){
         Throwable exception = assertThrows(Exception.class, () -> new Person.Arrive(animal, Planet.MOON, Planet.MOON, person));
         assertEquals("Путешествие не имеет смысла, на животных можно перемещаться только между планетами: Планета отправления == Планета прибытия(Луна). ArriveException!!!",
+                exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Test impossible arrive values")
+    void testPlanetOnSamePlanetExceptionException(){
+        Throwable exception = assertThrows(Exception.class, () -> person. new Bag(BagType.LADY_BAG, Color.PINK, Planet.MOON));
+        assertEquals("Нельзя положить в сумку планету, на которой находится эта сумка: Луна находиться на самой себе!!!",
                 exception.getMessage());
     }
 
