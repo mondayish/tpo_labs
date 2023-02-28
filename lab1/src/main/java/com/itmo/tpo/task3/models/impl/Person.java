@@ -9,6 +9,7 @@ import com.itmo.tpo.task3.exceptions.PlanetOnSamePlanetException;
 import com.itmo.tpo.task3.models.Alive;
 import com.itmo.tpo.task3.models.Philosophy;
 import com.itmo.tpo.task3.models.Thing;
+import lombok.SneakyThrows;
 
 import java.util.Objects;
 
@@ -196,13 +197,8 @@ public class Person extends Alive implements Philosophy {
 
         // exception если засунем планету, которая есть планета чемодана
         public void setContent(Object... content) {
-            try {
-                for (Object i : content) {
-                    if (i.equals(getPlace())) throw new PlanetOnSamePlanetException(getPlace());
-                }
-            } catch (PlanetOnSamePlanetException e) {
-                System.out.println(e.getMessage());
-                return;
+            for (Object i : content) {
+                if (i.equals(getPlace())) throw new PlanetOnSamePlanetException(getPlace());
             }
             this.content = deleteDoubleThings(content);
         }
@@ -246,19 +242,16 @@ public class Person extends Alive implements Philosophy {
         private Planet from;
         private Planet to;
 
+        @SneakyThrows
         public Arrive(Animal animalWithPower, Planet from, Planet to, Person... passengers) {
-            try {
-                // если планета from совпадает с to или если животное находится вообще на другой планете, то нет смысла в путешествии
-                if (from == to || from != animalWithPower.getPlace()) {
-                    throw new ArriveException(animalWithPower, from, to);
-                }
-                this.from = from;
-                this.to = to;
-                setAnimalWithPower(animalWithPower);
-                setPassengers(passengers);
-            } catch (ArriveException e) {
-                System.out.println(e.getMessage());
+            // если планета from совпадает с to или если животное находится вообще на другой планете, то нет смысла в путешествии
+            if (from == to || from != animalWithPower.getPlace()) {
+                throw new ArriveException(animalWithPower, from, to);
             }
+            this.from = from;
+            this.to = to;
+            setAnimalWithPower(animalWithPower);
+            setPassengers(passengers);
         }
 
         public Animal getAnimalWithPower() {
