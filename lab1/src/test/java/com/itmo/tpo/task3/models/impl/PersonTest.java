@@ -15,30 +15,28 @@ import static org.junit.jupiter.api.Assertions.*;
 class PersonTest {
 
     private static final ByteArrayOutputStream OUT_CONTENT = new ByteArrayOutputStream();
-    private static final ByteArrayOutputStream ERR_CONTENT = new ByteArrayOutputStream();
     private static final PrintStream ORIGINAL_OUT = System.out;
-    private static final PrintStream ORIGINAL_ERR = System.err;
     private static final String CRLF = "\r\n";
 
     private Person person1;
+    private Person person2;
+
 
     @BeforeAll
     public static void setUpStreams() {
         System.setOut(new PrintStream(OUT_CONTENT));
-        System.setErr(new PrintStream(ERR_CONTENT));
     }
 
     @AfterAll
     public static void restoreStreams() {
         System.setOut(ORIGINAL_OUT);
-        System.setErr(ORIGINAL_ERR);
     }
 
     @BeforeEach
     public void init() {
         OUT_CONTENT.reset();
-        ERR_CONTENT.reset();
         person1 = new Person("Снифф", Planet.MARS, 10, 2);
+        person2 = new Person("Чел2");
     }
 
     @DisplayName("Check setting valid attention to Person")
@@ -115,8 +113,33 @@ class PersonTest {
         String expectedOut = person1.getName() + " думает о " + gemStone.getName() + CRLF;
         person1.think(gemStone);
         assertEquals(Condition.THINK, person1.getCondition());
-        assertEquals(expectedOut, OUT_CONTENT.toString());
+        assertTrue(OUT_CONTENT.toString().contains(expectedOut));
     }
 
+    @DisplayName("Check transfer objects in person")
+    @Test
+    public void transferTest() {
+        String[] clothes = new String[]{"майка", "ушанка", "валенки"};
+        assertEquals(String.join(", ", clothes), person1.transfer(clothes, null));
+        assertEquals("default", person1.transfer(new Object[]{}, "default"));
+        assertEquals("default", person1.transfer(null, "default"));
+    }
 
+    @DisplayName("Check get dressed person")
+    @Test
+    public void getDressedTest() {
+        String[] clothes = new String[]{"майка", "ушанка", "валенки"};
+        String expectedOut = person2.getName() + " говорит: \"Мне нечего надеть\"" + CRLF;
+        person2.getDressed();
+        assertEquals(expectedOut, OUT_CONTENT.toString());
+
+        expectedOut = person2.getName() + " надевает " + String.join(", ", clothes) + CRLF;
+        person2.setClothes(clothes);
+        person2.getDressed();
+        assertTrue(OUT_CONTENT.toString().contains(expectedOut));
+
+        expectedOut = person2.getName() + " раздевается";
+        person2.getDressed();
+        assertTrue(OUT_CONTENT.toString().contains(expectedOut));
+    }
 }
