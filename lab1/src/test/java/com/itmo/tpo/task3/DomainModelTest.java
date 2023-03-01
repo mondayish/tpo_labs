@@ -43,4 +43,6 @@ public class DomainModelTest {
         assertEquals("Нельзя положить в сумку планету, на которой находится эта сумка: Луна находиться на самой себе!!!",
                 exception.getMessage());
     }
+
+
 }

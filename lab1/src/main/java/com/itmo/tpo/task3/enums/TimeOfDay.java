@@ -24,6 +24,7 @@ public enum TimeOfDay {
     public void beautifulDescription(String description, String... addPhrases) {
         // локальный класс
         class Speaker {
+
             private String[] beautifulPhrases = {"необычайно красиво", "прекрасно", "великолепно"};
 
             private void addPhrase(String phrase) {
