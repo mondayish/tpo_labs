@@ -24,7 +24,7 @@ public class Action {
         GemStone gemStone2 = new GemStone("Хрусти", Gem.CRYSTAL);
         Person.Bag case1 = tofsla.new Bag(BagType.CASE, Color.PURPLE, king);
         Person.Bag backpack1 = wizard.new Bag(BagType.BACKPACK, Color.PINK, gemStone1, gemStone2);
-        TimeOfDay.NIGHT.describe("Крайне тёмная земная");
+        TimeOfDay.NIGHT.describe("Крайне тёмная земная"); // todo test
         System.out.println();
         System.out.println("Описание объектов, учавствующих в действии:");
         System.out.println(sniff);
@@ -39,20 +39,21 @@ public class Action {
         System.out.println(case1);
         System.out.println();
         case1.openClosed();
-        TimeOfDay.NIGHT.beautifulDescription("Все огни, фонари и даже сама Луна погасли", "завораживающе");
+        TimeOfDay.NIGHT.beautifulDescription("Все огни, фонари и даже сама Луна погасли", "завораживающе"); // todo test
         sniff.sigh();
-        sniff.tell("Ну и счастливцы же эти Тофсла и Вифсла!");
-        wizard.rest();
-        pant.sleep();
+        sniff.tell("Ну и счастливцы же эти Тофсла и Вифсла!"); // todo test
+        wizard.rest(); // todo test
+        pant.sleep(); // todo test
         wizard.think(king);
         king.sparkle();
         wizard.notice(king);
         System.out.println(king);
         wizard.tell("Король рубинов! Я искал его не одну сотню лет!");
-        wizard.stand();
+        wizard.stand(); // todo test
         wizard.getDressed();
         backpack1.deleteContent(gemStone1, gemStone2);
-        Person.Arrive arrive1 = new Person.Arrive(pant, Planet.MOON, Planet.EARTH, wizard);
+        Person.Arrive arrive1 = new Person.Arrive(pant, Planet.MOON, Planet.EARTH, wizard); // todo test
+        // todo rewrite and test
         SpaceBody cometa = new SpaceBody() {
             final int size = 500;
             final Planet planet = Planet.EARTH;
@@ -88,7 +89,7 @@ public class Action {
         };
         cometa.startFly();
         manyMeteors.startFly();
-        arrive1.go();
+        arrive1.go(); // todo test
         manyMeteors.finishFly();
         arrive1.go();
     }
