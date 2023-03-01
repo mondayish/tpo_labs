@@ -41,15 +41,15 @@ public class Action {
         case1.openClosed();
         TimeOfDay.NIGHT.beautifulDescription("Все огни, фонари и даже сама Луна погасли", "завораживающе"); // todo test
         sniff.sigh();
-        sniff.tell("Ну и счастливцы же эти Тофсла и Вифсла!"); // todo test
-        wizard.rest(); // todo test
-        pant.sleep(); // todo test
+        sniff.tell("Ну и счастливцы же эти Тофсла и Вифсла!");
+        wizard.rest();
+        pant.sleep();
         wizard.think(king);
         king.sparkle();
         wizard.notice(king);
         System.out.println(king);
         wizard.tell("Король рубинов! Я искал его не одну сотню лет!");
-        wizard.stand(); // todo test
+        wizard.stand();
         wizard.getDressed();
         backpack1.deleteContent(gemStone1, gemStone2);
         Person.Arrive arrive1 = new Person.Arrive(pant, Planet.MOON, Planet.EARTH, wizard); // todo test

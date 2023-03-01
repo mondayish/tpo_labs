@@ -1,6 +1,5 @@
 package com.itmo.tpo.task3.enums;
 
-import com.itmo.tpo.task3.models.impl.Person;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -8,7 +7,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TimeOfDayTest {
 
@@ -36,7 +36,7 @@ class TimeOfDayTest {
     @ParameterizedTest(name = "Description = {0}")
     @DisplayName("Description test")
     @ValueSource(strings = {"блаженная", "великолепная", "синяя"})
-    void describeTest(String des){
+    public void describeTest(String des){
         String expectedOut = "Время: " + des + " Ночь" + CRLF;
         TimeOfDay.NIGHT.describe(des);
         assertEquals(expectedOut, OUT_CONTENT.toString());
@@ -44,7 +44,7 @@ class TimeOfDayTest {
     
     @DisplayName("Beautiful description test")
     @Test
-    void beautifulDescriptionTest(String des){
+    public void beautifulDescriptionTest(){
         String description = "Произошло нечто ужасное";
         String expectedOut1 = description + ": это было " + "необычайно красиво" + CRLF;
         String expectedOut2 = description + ": это было " + "прекрасно" + CRLF;
@@ -56,5 +56,4 @@ class TimeOfDayTest {
                 OUT_CONTENT.toString().equals(expectedOut3) ||
                 OUT_CONTENT.toString().equals(expectedOut4));
     }
-
 }
