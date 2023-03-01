@@ -39,7 +39,7 @@ public class Action {
         System.out.println(case1);
         System.out.println();
         case1.openClosed();
-        TimeOfDay.NIGHT.beautifulDescription("Все огни, фонари и даже сама Луна погасли", "завораживающе"); // todo test
+        TimeOfDay.NIGHT.beautifulDescription("Все огни, фонари и даже сама Луна погасли", "завораживающе");
         sniff.sigh();
         sniff.tell("Ну и счастливцы же эти Тофсла и Вифсла!");
         wizard.rest();
@@ -52,7 +52,7 @@ public class Action {
         wizard.stand();
         wizard.getDressed();
         backpack1.deleteContent(gemStone1, gemStone2);
-        Person.Arrive arrive1 = new Person.Arrive(pant, Planet.MOON, Planet.EARTH, wizard); // todo test
+        Person.Arrive arrive1 = new Person.Arrive(pant, Planet.MOON, Planet.EARTH, wizard);
         // todo rewrite and test
         SpaceBody cometa = new SpaceBody() {
             final int size = 500;

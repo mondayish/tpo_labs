@@ -61,8 +61,26 @@ class PersonArriveTest {
     @DisplayName("Check setting passengers for arrive")
     @Test
     public void setPassengersTest() {
-        Person[] inputPassengers = {person1};
+        String expectedOut = person1.getName() + " садиться на " + animal1.getName() + CRLF;
+        Person[] inputPassengers = new Person[]{person1};
+        Person[] expectedPassengers = new Person[]{person1};
+        person1.setCondition(Condition.NOTHING);
         arrive1.setPassengers(inputPassengers);
-        assertEquals(inputPassengers, arrive1.getPassengers());
+        assertArrayEquals(expectedPassengers, arrive1.getPassengers());
+        assertTrue(OUT_CONTENT.toString().contains(expectedOut));
+
+        Person person2 = new Person("Чел2", Planet.MOON, 10, 2);
+        inputPassengers = new Person[] {person1, person2};
+        person1.setCondition(Condition.NOTHING);
+        arrive1.setPassengers(inputPassengers);
+        assertArrayEquals(expectedPassengers, arrive1.getPassengers());
+
+        expectedOut = "Многовато пассажиров, все не влезут на " + animal1.getName() + CRLF;
+        expectedPassengers = new Person[]{};
+        animal1.setPower(0);
+        person1.setCondition(Condition.NOTHING);
+        arrive1.setPassengers(inputPassengers);
+        assertArrayEquals(expectedPassengers, arrive1.getPassengers());
+        assertTrue(OUT_CONTENT.toString().contains(expectedOut));
     }
 }
