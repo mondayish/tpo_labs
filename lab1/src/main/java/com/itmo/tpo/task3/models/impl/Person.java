@@ -17,6 +17,7 @@ public class Person extends Alive implements Philosophy {
 
     private final static int MAX_ATTENTION = 5;
     private final static int MIN_ATTENTION = 0;
+    private final static int VALUE_FOR_NOTICE = 100;
 
     private int attention;
     private String[] clothes;
@@ -48,8 +49,8 @@ public class Person extends Alive implements Philosophy {
     }
 
     // в этом методе используем приведение типов
-    public void setClothes(String... Clothes) {
-        Object[] objects = deleteDoubleThings(Clothes);
+    public void setClothes(String... clothes) {
+        Object[] objects = deleteDoubleThings(clothes);
         String[] cloth = new String[objects.length];
         for (int i = 0; i < objects.length; i++) {
             cloth[i] = (String) objects[i];
@@ -72,7 +73,7 @@ public class Person extends Alive implements Philosophy {
         return createNewArrayOfObjects(objects, deleteIndex);
     }
 
-    // метод для создания нового массива по старому и массиву индексов, кторые нужно удалить
+    // метод для создания нового массива по старому и массиву индексов, которые нужно удалить
     private static Object[] createNewArrayOfObjects(Object[] objectsForDelete, boolean[] deleteIndex) {
         int size = 0;
         for (boolean i : deleteIndex) if (!i) size++;
@@ -107,7 +108,7 @@ public class Person extends Alive implements Philosophy {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return attention == person.attention && getName() == person.getName();
+        return attention == person.attention && Objects.equals(getName(), person.getName());
     }
 
     @Override
@@ -131,7 +132,6 @@ public class Person extends Alive implements Philosophy {
     // персонаж заметит камень, только когда тот сверкает, у персонажа достаточно внимания, у камня достаточный размер, расстояние между их планетами достаточно мало
     @Override
     public void notice(GemStone gemStone) {
-        final int VALUE_FOR_NOTICE = 100;
         if (gemStone.getSpark() && attention * gemStone.getSize() /
                 (Math.abs(this.getPlace().getNumberToSun() - gemStone.getPlace().getNumberToSun())) > VALUE_FOR_NOTICE) {
             System.out.println(getName() + " заметил, что " + gemStone.getName() + " сверкает");
