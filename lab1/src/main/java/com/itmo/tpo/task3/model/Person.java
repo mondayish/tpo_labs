@@ -3,43 +3,55 @@ package com.itmo.tpo.task3.model;
 import lombok.Data;
 
 @Data
-public class Person implements Movable, Alive{
+public class Person implements Alive{
 
     private String surname;
     // todo национальность?))
-    private Person[] group;
+    private Group group;
     // todo нужен ли отдельный класс группы?
     private Environment location;
 
     @Override
-    public void usePassage(Passage passage){
+    public String usePassage(Passage passage){
         // todo использует проход для перемещения между локациями
+        return "что-то";
     }
 
-    public void hear(){
+    public String hear(){
         // todo слышит звуки из окружения
+        return "что-то";
     }
 
-    public void lookAround(){
+    public String lookAround(){
         // todo видит объекты в текущем окружении
+        return "что-то";
     }
 
-    public void think(Object object){
+    public String think(Object object){
         // todo мнение о предмете/проходе/локации/человеке
         // todo нормально ли пробрасывать object?
+        return "что-то";
     }
 
     @Override
-    public void speak(){
+    public String speak(){
         // todo что-то говорит, генерирует звук в окружение
+        return "что-то";
     }
 
-    public void speakTo(Person person){
+    public String smell(){
+        //todo
+        return null;
+    }
+
+    public String speakTo(Person person){
         // todo говорит что-то кому-то, проверка что люди в одной группе
+        return "что-то";
     }
 
-    public void follow(Person person){
+    public String follow(Person person){
         // todo следует за членом команды
+        return "что-то";
     }
 
 }

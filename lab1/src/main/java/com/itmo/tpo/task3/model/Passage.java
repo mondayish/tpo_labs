@@ -11,4 +11,14 @@ public class Passage {
     private boolean locked;
     private int[][] surfaceCoordinates;
     private String secretSwitch;
+
+    public String pressOnCoordinate(int X, int Y){
+        //todo
+        return null;
+    }
+
+    public String tryUnlock(String coordinate){
+        //todo
+        return null;
+    }
 }

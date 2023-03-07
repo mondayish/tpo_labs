@@ -9,16 +9,24 @@ public class Monster implements Alive{
     private Environment location;
 
     @Override
-    public void speak() {
+    public String speak() {
         // todo генерирует звуки
+        return "что-то";
     }
 
     @Override
-    public void usePassage(Passage passage) {
+    public String usePassage(Passage passage) {
         // todo переход из локации в локацию
+        return "что-то";
     }
 
-    public void generateGoo(){
+    public String generateGoo(){
         // todo генерирует слизь
+        return "что-то";
+    }
+
+    public String generateSmell(){
+        //todo
+        return null;
     }
 }
