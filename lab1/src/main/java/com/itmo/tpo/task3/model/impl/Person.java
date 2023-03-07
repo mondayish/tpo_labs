@@ -17,12 +17,14 @@ import java.util.stream.Collectors;
 @Builder
 public class Person implements Alive, Movable, Describable {
 
+    @NonNull
     private String surname;
     private Group group;
+    @NonNull
     private Environment location;
 
-    public String usePassage(Passage passage) {
-        if (Objects.isNull(location) || (!location.equals(passage.getThisSide()) && !location.equals(passage.getOtherSide())))
+    public String usePassage(@NonNull Passage passage) {
+        if (!location.equals(passage.getThisSide()) && !location.equals(passage.getOtherSide()))
             throw new NoAccessToPassageException(this, passage);
         String message;
         if (passage.isLocked()) message = description() + " пытался пройти через " + passage.description() + ", но " +
@@ -37,11 +39,11 @@ public class Person implements Alive, Movable, Describable {
     }
 
     public String hear() {
-        return description() + " слышит " + Optional.ofNullable(location).map(Environment::getSound).orElse("Nothing");
+        return description() + " слышит " + Optional.of(location).map(Environment::getSound).orElse("Nothing");
     }
 
     public String lookAround() {
-        if (Objects.isNull(location) || Objects.isNull(location.getThings()) || location.getThings().isEmpty())
+        if (Objects.isNull(location.getThings()) || location.getThings().isEmpty())
             return description() + " не видит ничего интересного вокруг себя.";
         else {
             return description() + " видит " +
@@ -49,34 +51,34 @@ public class Person implements Alive, Movable, Describable {
         }
     }
 
-    public String think(Describable describable, String thought) {
-        return description() + " думает о " + Optional.ofNullable(describable).map(Describable::description).orElse("Nothing")
-                + ": " + Optional.ofNullable(thought).orElse("Nothing") + ".";
+    public String think(@NonNull Describable describable, @NonNull String thought) {
+        return description() + " думает о " + Optional.of(describable).map(Describable::description).orElse("Nothing")
+                + ": " + thought + ".";
     }
 
-    public String generateSound(String speech) {
-        String message = description() + " сказал: \"" + Optional.ofNullable(speech).orElse("Nothing") + "\".";
+    public String generateSound(@NonNull String speech) {
+        String message = description() + " сказал: \"" + speech + "\".";
         location.setSound(message);
         return message;
     }
 
     public String smell() {
-        return description() + " почуял " + Optional.ofNullable(location).map(Environment::getSmell).orElse("Nothing");
+        return description() + " почуял " + Optional.of(location).map(Environment::getSmell).orElse("Nothing");
     }
 
-    public String speakTo(Person person, String speech) {
+    public String speakTo(@NonNull Person person, @NonNull String speech) {
         if (Objects.isNull(group) || Objects.isNull(group.getMembers()) || !group.getMembers().contains(person))
             throw new PersonNotInTheSameGroupException(this, person);
-        return description() + " обратился к " + person.description() + " и сказал: \"" + Optional.ofNullable(speech).orElse("Nothing") + "\".";
+        return description() + " обратился к " + person.description() + " и сказал: \"" + speech + "\".";
     }
 
-    public String follow(Person person) {
+    public String follow(@NonNull Person person) {
         if (Objects.isNull(group) || Objects.isNull(group.getMembers()) || !group.getMembers().contains(person)) throw new PersonNotInTheSameGroupException(this, person);
         return description() + " следует за " + person.description();
     }
 
-    public String tryUnlockPassage(Passage passage, String probablySecretSwitch) {
-        if (Objects.isNull(location) || (!location.equals(passage.getThisSide()) && !location.equals(passage.getOtherSide())))
+    public String tryUnlockPassage(@NonNull Passage passage, @NonNull String probablySecretSwitch) {
+        if (!location.equals(passage.getThisSide()) && !location.equals(passage.getOtherSide()))
             throw new NoAccessToPassageException(this, passage);
         StringBuilder message = new StringBuilder(description() + " пытается отпереть " + passage.description() + "...\n");
         if (!passage.isLocked()) message.append("Но проход оказался не заперт.");
