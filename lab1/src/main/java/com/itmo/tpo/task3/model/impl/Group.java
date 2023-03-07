@@ -17,8 +17,8 @@ public class Group implements Describable {
 
     private Set<Person> members = new HashSet<>();
 
-    public String massNotice(@NonNull Environment location) {
-        return "Все вместе наблюдают за: " + Optional.ofNullable(location.description()).orElse("Nothing");
+    public String massNotice(@NonNull Describable something) {
+        return "Все вместе наблюдают за: " + Optional.ofNullable(something.description()).orElse("Nothing");
     }
 
     public String addMember(@NonNull Person person) {
