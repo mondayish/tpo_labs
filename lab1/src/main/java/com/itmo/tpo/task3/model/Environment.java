@@ -10,8 +10,7 @@ public class Environment {
     private String name;
     private String sound;
     private String smell;
+    private String event;
     private Set<EnvironmentThing> things;
-
-
 
 }

@@ -3,12 +3,12 @@ package com.itmo.tpo.task3.model;
 import lombok.Data;
 
 @Data
-public class Monster implements Alive, Movable{
+public class Monster implements Alive, Movable, Describable {
 
     private String name;
     private Environment location;
 
-    public String generateSound() {
+    public String generateSound(String noise) {
         // todo генерирует звуки
         return "что-то";
     }
@@ -26,5 +26,10 @@ public class Monster implements Alive, Movable{
     public String generateSmell(){
         //todo
         return null;
+    }
+
+    @Override
+    public String description() {
+        return getName();
     }
 }

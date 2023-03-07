@@ -1,12 +1,11 @@
 package com.itmo.tpo.task3.model;
 
-import com.itmo.tpo.task3.model.exceptions.PassageAlreadyUnlockedException;
 import com.itmo.tpo.task3.model.exceptions.NoAccessToPassageException;
 import lombok.Data;
 import lombok.SneakyThrows;
 
 @Data
-public class Passage {
+public class Passage implements Describable {
 
     private String name;
     private Environment thisSide;
@@ -15,8 +14,13 @@ public class Passage {
     private String secretSwitch;
 
     @SneakyThrows
-    public String tryUnlock(String coordinate) throws PassageAlreadyUnlockedException, NoAccessToPassageException {
+    public String tryUnlock(String coordinate) throws NoAccessToPassageException {
         //todo
         return null;
+    }
+
+    @Override
+    public String description() {
+        return getName();
     }
 }
