@@ -2,7 +2,7 @@ package com.itmo.tpo.task2;
 
 public class HeapSort<T extends Comparable<? super T>> {
 
-    public T[] sort(T[] arr) {
+    public void sort(T[] arr) {
         int n = arr.length;
 
         // Build heap (rearrange array)
@@ -20,8 +20,6 @@ public class HeapSort<T extends Comparable<? super T>> {
             // call max heapify on the reduced heap
             heapify(arr, i, 0);
         }
-
-        return arr;
     }
 
     // To heapify a subtree rooted with node i which is
