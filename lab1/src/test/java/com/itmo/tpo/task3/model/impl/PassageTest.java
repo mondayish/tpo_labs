@@ -39,6 +39,7 @@ public class PassageTest {
         assertTrue(passage.tryUnlock("mama"));
         passage.setSecretSwitch("mama");
         assertTrue(passage.tryUnlock("mama"));
+        assertFalse(passage.isLocked());
         assertFalse(passage.tryUnlock("papa"));
     }
 }

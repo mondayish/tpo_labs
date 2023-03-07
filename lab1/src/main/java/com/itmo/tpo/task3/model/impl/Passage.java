@@ -21,7 +21,10 @@ public class Passage implements Describable {
     private String secretSwitch;
 
     public boolean tryUnlock(@NonNull String probablySecretSwitch) {
-        return locked = Objects.isNull(secretSwitch) || probablySecretSwitch.equals(secretSwitch);
+        if(probablySecretSwitch.equals(secretSwitch)) {
+            locked = false;
+        }
+        return Objects.isNull(secretSwitch) || probablySecretSwitch.equals(secretSwitch);
     }
 
     @Override
