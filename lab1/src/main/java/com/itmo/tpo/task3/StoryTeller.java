@@ -70,7 +70,7 @@ public class StoryTeller {
 
 
         System.out.println(rodriges.usePassage(passage1));
-        System.out.println(rodriges.speakTo(johansen,"Я обнаружил нечто интересное"));
+        System.out.println(rodriges.generateSound("Я обнаружил нечто интересное"));
         System.out.println(johansen.usePassage(passage1));
         System.out.println(briden.usePassage(passage1));
         System.out.println(willcocks.usePassage(passage1));
