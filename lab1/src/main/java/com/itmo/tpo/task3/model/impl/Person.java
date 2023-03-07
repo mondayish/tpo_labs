@@ -20,7 +20,7 @@ public class Person implements Alive, Movable, Describable {
 
     public String usePassage(Passage passage) {
         if (Objects.isNull(location) || (!location.equals(passage.getThisSide()) && !location.equals(passage.getOtherSide())))
-            throw new NoAccessToPassageException();
+            throw new NoAccessToPassageException(this, passage);
         String message;
         if (passage.isLocked()) message = description() + " пытался пройти через " + passage.description() + ", но " +
                 "проход оказался заперт";
@@ -66,18 +66,18 @@ public class Person implements Alive, Movable, Describable {
     }
 
     public String speakTo(Person person, String speech) {
-        if (!group.getMembers().contains(person)) throw new PersonNotInTheSameGroupException();
+        if (!group.getMembers().contains(person)) throw new PersonNotInTheSameGroupException(this, person);
         return description() + " обратился к " + person.description() + " и сказал: " + speech + ".";
     }
 
     public String follow(Person person) {
-        if (!group.getMembers().contains(person)) throw new PersonNotInTheSameGroupException();
+        if (!group.getMembers().contains(person)) throw new PersonNotInTheSameGroupException(this, person);
         return description() + " следует за " + person.description();
     }
 
     public String tryUnlockPassage(Passage passage, String probablySecretSwitch) {
         if (!location.equals(passage.getThisSide()) && !location.equals(passage.getOtherSide()))
-            throw new NoAccessToPassageException();
+            throw new NoAccessToPassageException(this, passage);
         StringBuilder message = new StringBuilder(description() + "пытается отпереть " + passage.description() + "...\n");
         if (!passage.isLocked()) message.append("Но проход оказался не заперт.");
         else {
