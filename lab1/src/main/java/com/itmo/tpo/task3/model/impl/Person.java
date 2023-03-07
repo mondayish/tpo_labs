@@ -5,10 +5,13 @@ import com.itmo.tpo.task3.exceptions.PersonNotInTheSameGroupException;
 import com.itmo.tpo.task3.model.Alive;
 import com.itmo.tpo.task3.model.Describable;
 import com.itmo.tpo.task3.model.Movable;
+import lombok.Builder;
 import lombok.Data;
-import lombok.SneakyThrows;
+
+import java.util.Objects;
 
 @Data
+@Builder
 public class Person implements Alive, Movable, Describable {
 
     private String surname;
@@ -16,7 +19,7 @@ public class Person implements Alive, Movable, Describable {
     private Environment location;
 
     public String usePassage(Passage passage) {
-        if (!location.equals(passage.getThisSide()) && !location.equals(passage.getOtherSide()))
+        if (Objects.isNull(location) || (!location.equals(passage.getThisSide()) && !location.equals(passage.getOtherSide())))
             throw new NoAccessToPassageException();
         String message;
         if (passage.isLocked()) message = description() + " пытался пройти через " + passage.description() + ", но " +

@@ -1,12 +1,11 @@
 package com.itmo.tpo.task3.model.impl;
 
-import com.itmo.tpo.task3.exceptions.NoAccessToPassageException;
 import com.itmo.tpo.task3.model.Describable;
-import com.itmo.tpo.task3.model.impl.Environment;
+import lombok.Builder;
 import lombok.Data;
-import lombok.SneakyThrows;
 
 @Data
+@Builder
 public class Passage implements Describable {
 
     private String name;
@@ -15,8 +14,7 @@ public class Passage implements Describable {
     private boolean locked;
     private String secretSwitch;
 
-    @SneakyThrows
-    public boolean tryUnlock(String probablySecretSwitch) throws NoAccessToPassageException {
+    public boolean tryUnlock(String probablySecretSwitch) {
         return probablySecretSwitch.equals(secretSwitch);
     }
 
