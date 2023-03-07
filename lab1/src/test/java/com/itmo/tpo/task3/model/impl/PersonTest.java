@@ -151,6 +151,7 @@ public class PersonTest {
         assertEquals(expected, firstPerson.tryUnlockPassage(passage, "mama"));
 
         expected = "Richardo пытается отпереть Secret door...\nОн пробует нажать на papa...\nНо ничего не произошло.";
+        passage.setLocked(true);
         assertEquals(expected, firstPerson.tryUnlockPassage(passage, "papa"));
 
         firstPerson.setLocation(thirdLocation);
