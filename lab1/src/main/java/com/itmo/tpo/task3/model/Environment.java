@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Set;
 
 @Data
-public class Environment {
+public class Environment implements Describable{
 
     private String name;
     private String sound;
@@ -13,4 +13,8 @@ public class Environment {
     private String event;
     private Set<EnvironmentThing> things;
 
+    @Override
+    public String description() {
+        return getEvent();
+    }
 }

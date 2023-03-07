@@ -24,6 +24,7 @@ public class Person implements Alive, Movable, Describable {
             if (location.equals(passage.getThisSide())) setLocation(passage.getOtherSide());
             else setLocation(passage.getThisSide());
         }
+
         return message;
     }
 
@@ -78,10 +79,10 @@ public class Person implements Alive, Movable, Describable {
         if (!passage.isLocked()) message.append("Но проход оказался не заперт.");
         else {
             message.append("Он пробует нажать на ").append(probablySecretSwitch).append("...\n");
-            if (probablySecretSwitch.equals(passage.getSecretSwitch())) message.append("И дверь открылась!");
+            if (passage.tryUnlock(probablySecretSwitch)) message.append("И проход открылся!");
             else message.append("Но ничего не произошло.");
         }
-        
+
         return message.toString();
     }
 

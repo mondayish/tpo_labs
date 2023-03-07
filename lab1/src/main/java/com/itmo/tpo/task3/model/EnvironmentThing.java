@@ -7,6 +7,9 @@ public class EnvironmentThing implements Describable {
 
     private String name;
 
+    public EnvironmentThing(String name) {
+        this.name = name;
+    }
 
     @Override
     public String description() {

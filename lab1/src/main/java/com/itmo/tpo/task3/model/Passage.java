@@ -14,9 +14,8 @@ public class Passage implements Describable {
     private String secretSwitch;
 
     @SneakyThrows
-    public String tryUnlock(String coordinate) throws NoAccessToPassageException {
-        //todo
-        return null;
+    public boolean tryUnlock(String probablySecretSwitch) throws NoAccessToPassageException {
+        return probablySecretSwitch.equals(secretSwitch);
     }
 
     @Override
