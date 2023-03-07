@@ -3,15 +3,13 @@ package com.itmo.tpo.task3.model;
 import lombok.Data;
 
 @Data
-public class Person implements Alive{
+public class Person implements Alive, Movable{
 
     private String surname;
-    // todo национальность?))
     private Group group;
-    // todo нужен ли отдельный класс группы?
     private Environment location;
 
-    @Override
+
     public String usePassage(Passage passage){
         // todo использует проход для перемещения между локациями
         return "что-то";
@@ -33,7 +31,6 @@ public class Person implements Alive{
         return "что-то";
     }
 
-    @Override
     public String speak(){
         // todo что-то говорит, генерирует звук в окружение
         return "что-то";

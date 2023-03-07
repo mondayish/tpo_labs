@@ -3,18 +3,16 @@ package com.itmo.tpo.task3.model;
 import lombok.Data;
 
 @Data
-public class Monster implements Alive{
+public class Monster implements Alive, Movable{
 
     private String name;
     private Environment location;
 
-    @Override
     public String speak() {
         // todo генерирует звуки
         return "что-то";
     }
 
-    @Override
     public String usePassage(Passage passage) {
         // todo переход из локации в локацию
         return "что-то";

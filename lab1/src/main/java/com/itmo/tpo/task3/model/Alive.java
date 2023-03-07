@@ -4,6 +4,5 @@ public interface Alive {
 
 
     String speak();
-    String usePassage(Passage passage);
 
 }

@@ -5,18 +5,10 @@ import lombok.Data;
 import java.util.Set;
 
 @Data
-public class Group implements Alive{
+public class Group implements Movable{
 
     private Set<Person> members;
 
-
-    @Override
-    public String speak() {
-        //todo
-        return null;
-    }
-
-    @Override
     public String usePassage(Passage passage) {
         //todo
         return null;
