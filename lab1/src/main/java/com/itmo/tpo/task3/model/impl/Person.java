@@ -31,6 +31,10 @@ public class Person implements Alive, Movable, Describable {
                 "проход оказался заперт";
         else {
             message = description() + " прошёл через " + passage.description();
+            if (Objects.nonNull(group)) {
+                group.removeMember(this);
+                setGroup(null);
+            }
             if (location.equals(passage.getThisSide())) setLocation(passage.getOtherSide());
             else setLocation(passage.getThisSide());
         }
@@ -73,7 +77,8 @@ public class Person implements Alive, Movable, Describable {
     }
 
     public String follow(@NonNull Person person) {
-        if (Objects.isNull(group) || Objects.isNull(group.getMembers()) || !group.getMembers().contains(person)) throw new PersonNotInTheSameGroupException(this, person);
+        if (Objects.isNull(group) || Objects.isNull(group.getMembers()) || !group.getMembers().contains(person))
+            throw new PersonNotInTheSameGroupException(this, person);
         return description() + " следует за " + person.description();
     }
 

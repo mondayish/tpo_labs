@@ -1,16 +1,19 @@
 package com.itmo.tpo.task3.model.impl;
 
 import com.itmo.tpo.task3.exceptions.PersonNotInTheSameGroupException;
+import com.itmo.tpo.task3.exceptions.PersonNotInTheSameLocationException;
 import com.itmo.tpo.task3.model.Describable;
 import lombok.Data;
 import lombok.NonNull;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
-public class Group {
+public class Group implements Describable {
 
     private Set<Person> members = new HashSet<>();
 
@@ -19,9 +22,12 @@ public class Group {
     }
 
     public String addMember(@NonNull Person person) {
-        person.setGroup(this);
-        members.add(person);
-        return person.description() + " присоединился к группе.";
+        if (members.isEmpty() || Objects.equals(person.getLocation(), members.iterator().next().getLocation())) {
+            person.setGroup(this);
+            members.add(person);
+            return person.description() + " присоединился к группе.";
+        }
+        throw new PersonNotInTheSameLocationException(person, this);
     }
 
     public String removeMember(@NonNull Person person) {
@@ -31,5 +37,10 @@ public class Group {
             return person.description() + " покинул группу.";
         }
         throw new PersonNotInTheSameGroupException();
+    }
+
+    @Override
+    public String description() {
+        return "Группа людей (" + this.members.stream().map(Person::description).collect(Collectors.joining(", ")) + ")";
     }
 }
