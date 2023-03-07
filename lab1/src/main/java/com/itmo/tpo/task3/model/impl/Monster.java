@@ -19,8 +19,8 @@ public class Monster implements Alive, Movable, Describable {
     @NonNull
     private Environment location;
 
-    public String generateSound(String noise){
-        String message = description() + " издало " + Optional.ofNullable(noise).orElse("Nothing") + "\".";
+    public String generateSound(@NonNull String noise) {
+        String message = description() + " издало: \"" + Optional.ofNullable(noise).orElse("Nothing") + "\".";
         location.setSound(noise);
         return message;
     }
@@ -40,12 +40,12 @@ public class Monster implements Alive, Movable, Describable {
         return message;
     }
 
-    public String generateGoo(){
+    public String generateGoo() {
         location.getThings().add(new EnvironmentThing("Комок слизи"));
         return description() + " источает слизь.";
     }
 
-    public String generateSmell(){
+    public String generateSmell() {
         location.setSmell("смрад");
         return description() + " источает смрад.";
     }
