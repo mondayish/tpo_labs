@@ -1,6 +1,7 @@
 package com.itmo.tpo.task3.model.impl;
 
 import com.itmo.tpo.task3.exceptions.PersonNotInTheSameGroupException;
+import com.itmo.tpo.task3.model.Describable;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -13,8 +14,8 @@ public class Group {
 
     private Set<Person> members = new HashSet<>();
 
-    public String massNotice(@NonNull Environment location) {
-        return "Все вместе наблюдают за: " + Optional.ofNullable(location.description()).orElse("Nothing");
+    public String massNotice(@NonNull Describable something) {
+        return "Все вместе наблюдают за: " + Optional.ofNullable(something.description()).orElse("Nothing");
     }
 
     public String addMember(@NonNull Person person) {
