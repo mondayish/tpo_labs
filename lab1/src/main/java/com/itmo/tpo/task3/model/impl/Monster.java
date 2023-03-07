@@ -4,16 +4,23 @@ import com.itmo.tpo.task3.exceptions.NoAccessToPassageException;
 import com.itmo.tpo.task3.model.Alive;
 import com.itmo.tpo.task3.model.Describable;
 import com.itmo.tpo.task3.model.Movable;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NonNull;
+
+import java.util.Optional;
 
 @Data
+@Builder
 public class Monster implements Alive, Movable, Describable {
 
+    @NonNull
     private String name;
+    @NonNull
     private Environment location;
 
     public String generateSound(String noise){
-        String message = description() + " издало \"" + noise + "\"." ;
+        String message = description() + " издало " + Optional.ofNullable(noise).orElse("Nothing") + "\".";
         location.setSound(noise);
         return message;
     }
