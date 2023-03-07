@@ -1,6 +1,10 @@
 package com.itmo.tpo.task3.model;
 
+import com.itmo.tpo.task3.model.exceptions.NoAccessToPassageException;
+import com.itmo.tpo.task3.model.exceptions.PassageAlreadyUnlockedException;
+import com.itmo.tpo.task3.model.exceptions.PersonNotInTheSameGroupException;
 import lombok.Data;
+import lombok.SneakyThrows;
 
 @Data
 public class Person implements Alive, Movable{
@@ -9,8 +13,8 @@ public class Person implements Alive, Movable{
     private Group group;
     private Environment location;
 
-
-    public String usePassage(Passage passage){
+    @SneakyThrows
+    public String usePassage(Passage passage) {
         // todo использует проход для перемещения между локациями
         return "что-то";
     }
@@ -31,7 +35,7 @@ public class Person implements Alive, Movable{
         return "что-то";
     }
 
-    public String speak(){
+    public String generateSound(){
         // todo что-то говорит, генерирует звук в окружение
         return "что-то";
     }
@@ -41,14 +45,19 @@ public class Person implements Alive, Movable{
         return null;
     }
 
-    public String speakTo(Person person){
+    public String speakTo(Person person) throws PersonNotInTheSameGroupException{
         // todo говорит что-то кому-то, проверка что люди в одной группе
         return "что-то";
     }
 
-    public String follow(Person person){
+    public String follow(Person person) throws PersonNotInTheSameGroupException {
         // todo следует за членом команды
         return "что-то";
+    }
+
+    public String tryUnlockPassage() throws PassageAlreadyUnlockedException {
+        //todo
+        return null;
     }
 
 }

@@ -8,7 +8,7 @@ public class Monster implements Alive, Movable{
     private String name;
     private Environment location;
 
-    public String speak() {
+    public String generateSound() {
         // todo генерирует звуки
         return "что-то";
     }

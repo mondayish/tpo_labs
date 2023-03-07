@@ -1,6 +1,9 @@
 package com.itmo.tpo.task3.model;
 
+import com.itmo.tpo.task3.model.exceptions.PassageAlreadyUnlockedException;
+import com.itmo.tpo.task3.model.exceptions.NoAccessToPassageException;
 import lombok.Data;
+import lombok.SneakyThrows;
 
 @Data
 public class Passage {
@@ -9,15 +12,10 @@ public class Passage {
     private Environment thisSide;
     private Environment otherSide;
     private boolean locked;
-    private int[][] surfaceCoordinates;
     private String secretSwitch;
 
-    public String pressOnCoordinate(int X, int Y){
-        //todo
-        return null;
-    }
-
-    public String tryUnlock(String coordinate){
+    @SneakyThrows
+    public String tryUnlock(String coordinate) throws PassageAlreadyUnlockedException, NoAccessToPassageException {
         //todo
         return null;
     }
