@@ -7,8 +7,11 @@ import com.itmo.tpo.task3.model.Describable;
 import com.itmo.tpo.task3.model.Movable;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NonNull;
 
 import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -34,51 +37,48 @@ public class Person implements Alive, Movable, Describable {
     }
 
     public String hear() {
-        return description() + " слышит " + location.getSound();
+        return description() + " слышит " + Optional.ofNullable(location).map(Environment::getSound).orElse("Nothing");
     }
 
     public String lookAround() {
-        StringBuilder message;
-        if (location.getThings().isEmpty())
-            message = new StringBuilder(description() + " не видит ничего интересного вокруг себя.");
+        if (Objects.isNull(location) || Objects.isNull(location.getThings()) || location.getThings().isEmpty())
+            return description() + " не видит ничего интересного вокруг себя.";
         else {
-            message = new StringBuilder(description() + " видит ");
-            for (EnvironmentThing thing : location.getThings()) {
-                message.append(thing.description()).append(", ");
-            }
-            message.replace(message.length() - 2, message.length() - 1, ".");
+            return description() + " видит " +
+                    location.getThings().stream().map(EnvironmentThing::getName).sorted().collect(Collectors.joining(", ")) + ".";
         }
-        return message.toString();
     }
 
-    public String think(Describable object, String thought) {
-        return description() + " думает о " + object.description() + ": " + thought + ".";
+    public String think(Describable describable, String thought) {
+        return description() + " думает о " + Optional.ofNullable(describable).map(Describable::description).orElse("Nothing")
+                + ": " + Optional.ofNullable(thought).orElse("Nothing") + ".";
     }
 
     public String generateSound(String speech) {
-        String message = description() + " сказал: \"" + speech + "\".";
+        String message = description() + " сказал: \"" + Optional.ofNullable(speech).orElse("Nothing") + "\".";
         location.setSound(message);
         return message;
     }
 
     public String smell() {
-        return description() + " почуял " + location.getSmell();
+        return description() + " почуял " + Optional.ofNullable(location).map(Environment::getSmell).orElse("Nothing");
     }
 
     public String speakTo(Person person, String speech) {
-        if (!group.getMembers().contains(person)) throw new PersonNotInTheSameGroupException(this, person);
-        return description() + " обратился к " + person.description() + " и сказал: " + speech + ".";
+        if (Objects.isNull(group) || Objects.isNull(group.getMembers()) || !group.getMembers().contains(person))
+            throw new PersonNotInTheSameGroupException(this, person);
+        return description() + " обратился к " + person.description() + " и сказал: \"" + Optional.ofNullable(speech).orElse("Nothing") + "\".";
     }
 
     public String follow(Person person) {
-        if (!group.getMembers().contains(person)) throw new PersonNotInTheSameGroupException(this, person);
+        if (Objects.isNull(group) || Objects.isNull(group.getMembers()) || !group.getMembers().contains(person)) throw new PersonNotInTheSameGroupException(this, person);
         return description() + " следует за " + person.description();
     }
 
     public String tryUnlockPassage(Passage passage, String probablySecretSwitch) {
-        if (!location.equals(passage.getThisSide()) && !location.equals(passage.getOtherSide()))
+        if (Objects.isNull(location) || (!location.equals(passage.getThisSide()) && !location.equals(passage.getOtherSide())))
             throw new NoAccessToPassageException(this, passage);
-        StringBuilder message = new StringBuilder(description() + "пытается отпереть " + passage.description() + "...\n");
+        StringBuilder message = new StringBuilder(description() + " пытается отпереть " + passage.description() + "...\n");
         if (!passage.isLocked()) message.append("Но проход оказался не заперт.");
         else {
             message.append("Он пробует нажать на ").append(probablySecretSwitch).append("...\n");
@@ -89,9 +89,21 @@ public class Person implements Alive, Movable, Describable {
         return message.toString();
     }
 
-
     @Override
     public String description() {
         return getSurname();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return surname.equals(person.surname) && Objects.equals(group, person.group) && Objects.equals(location, person.location);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(surname);
     }
 }

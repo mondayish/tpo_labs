@@ -2,12 +2,13 @@ package com.itmo.tpo.task3.model.impl;
 
 import lombok.Data;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
 public class Group {
 
-    private Set<Person> members;
+    private Set<Person> members = new HashSet<>();
 
     public String massNotice(Environment location) {
         return "Все вместе наблюдают за: " + location.description();
