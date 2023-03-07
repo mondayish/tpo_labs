@@ -7,14 +7,15 @@ public class PersonNotInTheSameGroupException extends RuntimeException {
     private Person person1;
     private Person person2;
 
-    public PersonNotInTheSameGroupException(Person person1, Person person2){
+    public PersonNotInTheSameGroupException(Person person1, Person person2) {
         this.person1 = person1;
         this.person2 = person2;
     }
 
-    public PersonNotInTheSameGroupException(){
+    public PersonNotInTheSameGroupException() {
 
     }
+
     @Override
     public String getMessage() {
         return person1.description() + " и " + person2.description() + " не находятся в одной группе. " +

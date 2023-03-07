@@ -64,6 +64,7 @@ public class PersonTest {
         String expected = "Richardo прошёл через Secret door";
         assertEquals(expected, firstPerson.usePassage(passage));
         assertEquals(secondLocation, firstPerson.getLocation());
+        assertNull(firstPerson.getGroup());
 
         expected = "Richardo пытался пройти через Secret door, но проход оказался заперт";
         passage.setLocked(true);

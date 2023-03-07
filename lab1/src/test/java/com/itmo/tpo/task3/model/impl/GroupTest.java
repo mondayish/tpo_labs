@@ -1,6 +1,7 @@
 package com.itmo.tpo.task3.model.impl;
 
 import com.itmo.tpo.task3.exceptions.PersonNotInTheSameGroupException;
+import com.itmo.tpo.task3.exceptions.PersonNotInTheSameLocationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,8 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GroupTest {
 
     private Environment firstLocation;
+    private Environment secondLocation;
     private Person firstPerson;
     private Person secondPerson;
+    private Person thirdPerson;
     private Group group;
 
     @BeforeEach
@@ -24,6 +27,12 @@ public class GroupTest {
                 .smell("Smell")
                 .event("Event")
                 .build();
+        secondLocation = Environment.builder()
+                .name("River")
+                .sound("Nothing")
+                .smell("Nothing")
+                .event("Nothing")
+                .build();
         firstPerson = Person.builder()
                 .surname("Richardo")
                 .location(firstLocation)
@@ -31,6 +40,10 @@ public class GroupTest {
         secondPerson = Person.builder()
                 .surname("Billy")
                 .location(firstLocation)
+                .build();
+        thirdPerson = Person.builder()
+                .surname("Sasha")
+                .location(secondLocation)
                 .build();
         group = new Group();
         group.addMember(firstPerson);
@@ -54,6 +67,10 @@ public class GroupTest {
         assertEquals(expected, group.addMember(secondPerson));
         assertEquals(Set.of(firstPerson, secondPerson), group.getMembers());
         assertEquals(group, secondPerson.getGroup());
+
+        assertThrows(PersonNotInTheSameLocationException.class, () -> group.addMember(thirdPerson));
+        assertEquals(Set.of(firstPerson, secondPerson), group.getMembers());
+        assertNull(thirdPerson.getGroup());
     }
 
     @Test
