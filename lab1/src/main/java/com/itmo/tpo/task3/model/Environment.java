@@ -6,4 +6,7 @@ import lombok.Data;
 public class Environment {
 
     private String name;
+    private String sound;
+    private EnvironmentThing[] things;
+
 }

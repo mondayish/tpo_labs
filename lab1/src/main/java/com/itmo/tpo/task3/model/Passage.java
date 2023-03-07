@@ -6,4 +6,9 @@ import lombok.Data;
 public class Passage {
 
     private String name;
+    private Environment thisSide;
+    private Environment otherSide;
+    private boolean locked;
+    private int[][] surfaceCoordinates;
+    private String secretSwitch;
 }
