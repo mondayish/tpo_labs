@@ -14,6 +14,7 @@ public class PersonTest {
 
     private Environment firstLocation;
     private Environment secondLocation;
+    private Environment thirdLocation;
     private Person firstPerson;
     private Person secondPerson;
     private Group group;
@@ -23,15 +24,18 @@ public class PersonTest {
     public void init() {
         firstLocation = Environment.builder()
                 .name("Desert")
-                .sound("Nothing")
-                .smell("Nothing")
-                .event("Nothing")
+                .sound("Sound")
+                .smell("Smell")
+                .event("Event")
                 .build();
         secondLocation = Environment.builder()
                 .name("River")
                 .sound("Nothing")
                 .smell("Nothing")
                 .event("Nothing")
+                .build();
+        thirdLocation = Environment.builder()
+                .name("Space")
                 .build();
         firstPerson = Person.builder()
                 .surname("Richardo")
@@ -67,17 +71,18 @@ public class PersonTest {
         assertEquals(secondLocation, firstPerson.getLocation());
 
         passage.setLocked(false);
-        firstPerson.setLocation(null);
+        firstPerson.setLocation(thirdLocation);
         assertThrows(NoAccessToPassageException.class, () -> firstPerson.usePassage(passage));
     }
 
     @Test
     @DisplayName("Check hear method")
     public void hearTest() {
-        String expected = "Richardo слышит Nothing";
+        String expected = "Richardo слышит Sound";
         assertEquals(expected, firstPerson.hear());
 
-        firstPerson.setLocation(null);
+        expected = "Richardo слышит Nothing";
+        firstLocation.setSound(null);
         assertEquals(expected, firstPerson.hear());
     }
 
@@ -87,11 +92,7 @@ public class PersonTest {
         String expected = "Richardo не видит ничего интересного вокруг себя.";
         assertEquals(expected, firstPerson.lookAround());
 
-        firstPerson.setLocation(null);
-        assertEquals(expected, firstPerson.lookAround());
-
         expected = "Richardo видит cactus, scarab.";
-        firstPerson.setLocation(firstLocation);
         firstLocation.setThings(Set.of(new EnvironmentThing("scarab"), new EnvironmentThing("cactus")));
         assertEquals(expected, firstPerson.lookAround());
     }
@@ -102,8 +103,8 @@ public class PersonTest {
         String expected = "Richardo думает о girl: nice dress.";
         assertEquals(expected, firstPerson.think(() -> "girl", "nice dress"));
 
-        expected = "Richardo думает о Nothing: Nothing.";
-        assertEquals(expected, firstPerson.think(null, null));
+        expected = "Richardo думает о Nothing: lol.";
+        assertEquals(expected, firstPerson.think(() -> null, "lol"));
     }
 
     @Test
@@ -112,18 +113,12 @@ public class PersonTest {
         String expected = "Richardo сказал: \"Hola!\".";
         assertEquals(expected, firstPerson.generateSound("Hola!"));
         assertEquals(expected, firstPerson.getLocation().getSound());
-
-        expected = "Richardo сказал: \"Nothing\".";
-        assertEquals(expected, firstPerson.generateSound(null));
     }
 
     @Test
     @DisplayName("Check smell method")
     public void smellTest() {
-        String expected = "Richardo почуял Nothing";
-        assertEquals(expected, firstPerson.smell());
-
-        firstPerson.setLocation(null);
+        String expected = "Richardo почуял Smell";
         assertEquals(expected, firstPerson.smell());
     }
 
@@ -157,7 +152,7 @@ public class PersonTest {
         expected = "Richardo пытается отпереть Secret door...\nОн пробует нажать на papa...\nНо ничего не произошло.";
         assertEquals(expected, firstPerson.tryUnlockPassage(passage, "papa"));
 
-        firstPerson.setLocation(null);
+        firstPerson.setLocation(thirdLocation);
         assertThrows(NoAccessToPassageException.class, () -> firstPerson.tryUnlockPassage(passage, "mama"));
     }
 }
