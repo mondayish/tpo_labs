@@ -1,5 +1,6 @@
-package com.itmo.tpo.task3.model;
+package com.itmo.tpo.task3.model.impl;
 
+import com.itmo.tpo.task3.model.Describable;
 import lombok.Data;
 
 @Data

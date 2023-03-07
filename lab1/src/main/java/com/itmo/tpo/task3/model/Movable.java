@@ -1,11 +1,8 @@
 package com.itmo.tpo.task3.model;
 
-import com.itmo.tpo.task3.model.exceptions.NoAccessToPassageException;
-import lombok.SneakyThrows;
+import com.itmo.tpo.task3.model.impl.Passage;
 
 public interface Movable {
 
-    @SneakyThrows
-    String usePassage(Passage passage) throws NoAccessToPassageException;
-
+    String usePassage(Passage passage);
 }

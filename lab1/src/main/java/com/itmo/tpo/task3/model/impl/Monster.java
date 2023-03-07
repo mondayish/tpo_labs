@@ -1,8 +1,10 @@
-package com.itmo.tpo.task3.model;
+package com.itmo.tpo.task3.model.impl;
 
-import com.itmo.tpo.task3.model.exceptions.NoAccessToPassageException;
+import com.itmo.tpo.task3.exceptions.NoAccessToPassageException;
+import com.itmo.tpo.task3.model.Alive;
+import com.itmo.tpo.task3.model.Describable;
+import com.itmo.tpo.task3.model.Movable;
 import lombok.Data;
-import lombok.SneakyThrows;
 
 @Data
 public class Monster implements Alive, Movable, Describable {
@@ -16,7 +18,6 @@ public class Monster implements Alive, Movable, Describable {
         return message;
     }
 
-    @SneakyThrows
     public String usePassage(Passage passage) {
         if (!location.equals(passage.getThisSide()) && !location.equals(passage.getOtherSide()))
             throw new NoAccessToPassageException();

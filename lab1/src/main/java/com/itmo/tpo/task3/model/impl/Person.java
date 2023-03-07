@@ -1,7 +1,10 @@
-package com.itmo.tpo.task3.model;
+package com.itmo.tpo.task3.model.impl;
 
-import com.itmo.tpo.task3.model.exceptions.NoAccessToPassageException;
-import com.itmo.tpo.task3.model.exceptions.PersonNotInTheSameGroupException;
+import com.itmo.tpo.task3.exceptions.NoAccessToPassageException;
+import com.itmo.tpo.task3.exceptions.PersonNotInTheSameGroupException;
+import com.itmo.tpo.task3.model.Alive;
+import com.itmo.tpo.task3.model.Describable;
+import com.itmo.tpo.task3.model.Movable;
 import lombok.Data;
 import lombok.SneakyThrows;
 
@@ -12,7 +15,6 @@ public class Person implements Alive, Movable, Describable {
     private Group group;
     private Environment location;
 
-    @SneakyThrows
     public String usePassage(Passage passage) {
         if (!location.equals(passage.getThisSide()) && !location.equals(passage.getOtherSide()))
             throw new NoAccessToPassageException();
@@ -28,13 +30,14 @@ public class Person implements Alive, Movable, Describable {
         return message;
     }
 
-    public String hear(){
+    public String hear() {
         return description() + " слышит " + location.getSound();
     }
 
-    public String lookAround(){
+    public String lookAround() {
         StringBuilder message;
-        if (location.getThings().isEmpty()) message = new StringBuilder(description() + " не видит ничего интересного вокруг себя.");
+        if (location.getThings().isEmpty())
+            message = new StringBuilder(description() + " не видит ничего интересного вокруг себя.");
         else {
             message = new StringBuilder(description() + " видит ");
             for (EnvironmentThing thing : location.getThings()) {
@@ -45,34 +48,31 @@ public class Person implements Alive, Movable, Describable {
         return message.toString();
     }
 
-    public String think(Describable object, String thought){
+    public String think(Describable object, String thought) {
         return description() + " думает о " + object.description() + ": " + thought + ".";
     }
 
-    public String generateSound(String speech){
-        String message = description() + " сказал: \"" + speech + "\"." ;
+    public String generateSound(String speech) {
+        String message = description() + " сказал: \"" + speech + "\".";
         location.setSound(message);
         return message;
     }
 
-    public String smell(){
+    public String smell() {
         return description() + " почуял " + location.getSmell();
     }
 
-    @SneakyThrows
-    public String speakTo(Person person, String speech) throws PersonNotInTheSameGroupException{
+    public String speakTo(Person person, String speech) {
         if (!group.getMembers().contains(person)) throw new PersonNotInTheSameGroupException();
         return description() + " обратился к " + person.description() + " и сказал: " + speech + ".";
     }
 
-    @SneakyThrows
-    public String follow(Person person) throws PersonNotInTheSameGroupException {
+    public String follow(Person person) {
         if (!group.getMembers().contains(person)) throw new PersonNotInTheSameGroupException();
         return description() + " следует за " + person.description();
     }
 
-    @SneakyThrows
-    public String tryUnlockPassage(Passage passage, String probablySecretSwitch) throws NoAccessToPassageException {
+    public String tryUnlockPassage(Passage passage, String probablySecretSwitch) {
         if (!location.equals(passage.getThisSide()) && !location.equals(passage.getOtherSide()))
             throw new NoAccessToPassageException();
         StringBuilder message = new StringBuilder(description() + "пытается отпереть " + passage.description() + "...\n");

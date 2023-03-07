@@ -1,11 +1,12 @@
-package com.itmo.tpo.task3.model;
+package com.itmo.tpo.task3.model.impl;
 
+import com.itmo.tpo.task3.model.Describable;
 import lombok.Data;
 
 import java.util.Set;
 
 @Data
-public class Environment implements Describable{
+public class Environment implements Describable {
 
     private String name;
     private String sound;

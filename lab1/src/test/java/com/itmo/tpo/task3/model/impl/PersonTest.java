@@ -1,10 +1,6 @@
-package com.itmo.tpo.task3;
+package com.itmo.tpo.task3.model.impl;
 
-import com.itmo.tpo.task3.model.Environment;
-import com.itmo.tpo.task3.model.Passage;
-import com.itmo.tpo.task3.model.Person;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 
 public class PersonTest {
 

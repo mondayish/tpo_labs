@@ -1,6 +1,8 @@
-package com.itmo.tpo.task3.model;
+package com.itmo.tpo.task3.model.impl;
 
-import com.itmo.tpo.task3.model.exceptions.NoAccessToPassageException;
+import com.itmo.tpo.task3.exceptions.NoAccessToPassageException;
+import com.itmo.tpo.task3.model.Describable;
+import com.itmo.tpo.task3.model.impl.Environment;
 import lombok.Data;
 import lombok.SneakyThrows;
 
