@@ -13,7 +13,6 @@ public class Person implements Alive, Movable{
     private Group group;
     private Environment location;
 
-    @SneakyThrows
     public String usePassage(Passage passage) {
         // todo использует проход для перемещения между локациями
         return "что-то";
@@ -45,16 +44,19 @@ public class Person implements Alive, Movable{
         return null;
     }
 
+    @SneakyThrows
     public String speakTo(Person person) throws PersonNotInTheSameGroupException{
         // todo говорит что-то кому-то, проверка что люди в одной группе
         return "что-то";
     }
 
+    @SneakyThrows
     public String follow(Person person) throws PersonNotInTheSameGroupException {
         // todo следует за членом команды
         return "что-то";
     }
 
+    @SneakyThrows
     public String tryUnlockPassage() throws PassageAlreadyUnlockedException {
         //todo
         return null;
