@@ -3,29 +3,29 @@ package com.itmo.tpo.function;
 import lombok.SneakyThrows;
 
 import java.io.FileWriter;
+import java.math.BigDecimal;
 
-import static java.lang.Math.PI;
-import static java.lang.Math.pow;
+import static java.lang.Math.*;
 
-public abstract class Function {
+public abstract class AbstractFunction {
 
     private static final double MIN_ACCURACY = pow(10, -10);
     private static final double MAX_ACCURACY = pow(10, -1);
 
     protected double accuracy;
 
-    public Function(double accuracy) {
+    public AbstractFunction(double accuracy) {
         if (accuracy < MIN_ACCURACY || accuracy > MAX_ACCURACY) {
             throw new IllegalArgumentException("Accuracy must be in [" + MIN_ACCURACY + ", " + MAX_ACCURACY + "]");
         }
         this.accuracy = accuracy;
     }
 
-    public Function() {
+    public AbstractFunction() {
         this(MIN_ACCURACY);
     }
 
-    public abstract double calculate(double x);
+    public abstract BigDecimal calculate(double x);
 
     // todo вынести эту кучу параметров в какой-нибудь объект контекста
     @SneakyThrows
@@ -43,19 +43,5 @@ public abstract class Function {
             x += step;
         }
         return result.toString();
-    }
-
-    // todo refactoring)))
-    protected double handleInterval(double x) {
-        if (x > 0) {
-            while (x > 2 * PI) {
-                x -= 2 * PI;
-            }
-        } else {
-            while (x < -2 * PI) {
-                x += 2 * PI;
-            }
-        }
-        return x;
     }
 }

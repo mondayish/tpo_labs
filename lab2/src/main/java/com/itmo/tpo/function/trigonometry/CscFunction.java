@@ -5,20 +5,19 @@ import com.itmo.tpo.function.AbstractFunction;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class CotFunction extends AbstractFunction {
+public class CscFunction extends AbstractFunction {
 
-    public CotFunction(double accuracy) {
+    public CscFunction(double accuracy) {
         super(accuracy);
     }
 
-    public CotFunction() {
+    public CscFunction() {
         super();
     }
 
     @Override
     public BigDecimal calculate(double x) {
-        BigDecimal cos = new CosFunction(this.accuracy).calculate(x);
         BigDecimal sin = new SinFunction(this.accuracy).calculate(x);
-        return cos.divide(sin, 20, RoundingMode.HALF_UP);
+        return BigDecimal.ONE.divide(sin, 20, RoundingMode.HALF_UP);
     }
 }

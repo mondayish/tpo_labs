@@ -1,11 +1,11 @@
 package com.itmo.tpo.function.trigonometry;
 
-import com.itmo.tpo.function.Function;
+import com.itmo.tpo.function.AbstractFunction;
 
-import static java.lang.Math.PI;
-import static java.lang.Math.abs;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-public class SecFunction extends Function {
+public class SecFunction extends AbstractFunction {
 
     public SecFunction(double accuracy) {
         super(accuracy);
@@ -16,12 +16,8 @@ public class SecFunction extends Function {
     }
 
     @Override
-    public double calculate(double x) {
-        x = handleInterval(x);
-        if (abs(x % PI - PI / 2) <= this.accuracy) return Double.POSITIVE_INFINITY;
-        if (abs(x % PI + PI / 2) <= this.accuracy) return Double.POSITIVE_INFINITY;
-
-        double sec = 1 / new CosFunction(this.accuracy).calculate(x);
-        return Double.isFinite(sec) ? sec : Double.POSITIVE_INFINITY;
+    public BigDecimal calculate(double x) {
+        BigDecimal cos = new CosFunction(this.accuracy).calculate(x);
+        return BigDecimal.ONE.divide(cos, 20, RoundingMode.HALF_UP);
     }
 }

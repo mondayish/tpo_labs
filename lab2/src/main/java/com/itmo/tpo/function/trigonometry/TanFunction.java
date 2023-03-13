@@ -1,11 +1,11 @@
 package com.itmo.tpo.function.trigonometry;
 
-import com.itmo.tpo.function.Function;
+import com.itmo.tpo.function.AbstractFunction;
 
-import static java.lang.Math.PI;
-import static java.lang.Math.abs;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-public class TanFunction extends Function {
+public class TanFunction extends AbstractFunction {
 
     public TanFunction(double accuracy) {
         super(accuracy);
@@ -16,12 +16,9 @@ public class TanFunction extends Function {
     }
 
     @Override
-    public double calculate(double x) {
-        x = handleInterval(x);
-        if (abs(x % PI - PI / 2) <= this.accuracy) return Double.POSITIVE_INFINITY;
-        if (abs(x % PI + PI / 2) <= this.accuracy) return Double.POSITIVE_INFINITY;
-
-        double tan = new SinFunction(this.accuracy).calculate(x) / new CosFunction(this.accuracy).calculate(x);
-        return Double.isFinite(tan) ? tan : Double.POSITIVE_INFINITY;
+    public BigDecimal calculate(double x) {
+        BigDecimal sin = new SinFunction(this.accuracy).calculate(x);
+        BigDecimal cos = new CosFunction(this.accuracy).calculate(x);
+        return sin.divide(cos, 20, RoundingMode.HALF_UP);
     }
 }

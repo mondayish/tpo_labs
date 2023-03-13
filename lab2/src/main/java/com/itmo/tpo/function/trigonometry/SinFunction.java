@@ -1,11 +1,11 @@
 package com.itmo.tpo.function.trigonometry;
 
-import com.itmo.tpo.function.Function;
+import com.itmo.tpo.function.AbstractFunction;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.pow;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-public class SinFunction extends Function {
+public class SinFunction extends AbstractFunction {
 
     public SinFunction(double accuracy) {
         super(accuracy);
@@ -16,24 +16,24 @@ public class SinFunction extends Function {
     }
 
     @Override
-    public double calculate(double x) {
-        double result = 0, prev;
-        int i = 0;
-        x = handleInterval(x);
+    public BigDecimal calculate(double x) {
+        BigDecimal result = BigDecimal.ZERO, prev;
+        int n = 0;
 
         do {
             prev = result;
-            result = result + pow(-1, i) * pow(x, 2 * i + 1) / factorial(2 * i + 1);
-            i++;
-        } while (this.accuracy <= abs(result - prev));
+            result = result.add(new BigDecimal(-1).pow(n).multiply(new BigDecimal(x).pow(2 * n + 1))
+                    .divide(factorial(2 * n + 1), 20, RoundingMode.HALF_UP));
+            n++;
+        } while (this.accuracy <= result.subtract(prev).abs().doubleValue());
 
         return result;
     }
 
-    private static double factorial(int n) {
-        double result = 1;
+    private static BigDecimal factorial(long n) {
+        BigDecimal result = BigDecimal.ONE;
         for (int i = 2; i <= n; i++) {
-            result *= i;
+            result = result.multiply(BigDecimal.valueOf(i));
         }
         return result;
     }
